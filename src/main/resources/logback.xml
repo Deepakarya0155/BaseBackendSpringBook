@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="path" value="log"/>
+	<property name="archivedPath" value="log/archived"/>
+	<property name="pattern" value="%d [%t:%p] [%C:%L] : %m%n"/>
+	<property name="archivedFileNamePattern" value="%d{yyyy-MM-dd}.%i.log.gz"/>
+	<property name="maxfilesize" value="10MB"/>
+	<property name="totalSizeCap" value="1GB"/>
+	<property name="maxHistory" value="5"/>
+	
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				${pattern}
+			</pattern>
+		</encoder>
+	</appender> 
+	<appender name="consoleFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path}/sysout.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${archivedPath}/sysout.${archivedFileNamePattern}</fileNamePattern>
+			<maxFileSize>${maxfilesize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+			<maxHistory>${totalSizeCap}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+			${pattern}
+			</pattern>
+		</encoder>
+	</appender> 
+	
+	<appender name="securityAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path}/security.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${archivedPath}/security.${archivedFileNamePattern}</fileNamePattern>
+			<maxFileSize>${maxfilesize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+			<maxHistory>${totalSizeCap}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+			${pattern}
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="utilAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path}/util.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${archivedPath}/util.${archivedFileNamePattern}</fileNamePattern>
+			<maxFileSize>${maxfilesize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+			<maxHistory>${totalSizeCap}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+			${pattern}
+			</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<appender name="filterAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${path}/filter.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${archivedPath}/filter.${archivedFileNamePattern}</fileNamePattern>
+			<maxFileSize>${maxfilesize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+			<maxHistory>${totalSizeCap}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+			${pattern}
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="com.school.filter">
+		<appender-ref ref="filterAppender"/>
+	</logger>
+	
+	<logger name="securityLogger" >
+		<appender-ref ref="securityAppender"/>
+	</logger>
+	<logger name="com.school.utils" level="debug" >
+		<appender-ref ref="utilAppender"/>
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="consoleAppender"/>
+		<appender-ref ref="consoleFileAppender"/>
+	</root>
+</configuration>
